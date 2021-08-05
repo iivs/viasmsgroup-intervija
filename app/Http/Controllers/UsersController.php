@@ -99,7 +99,7 @@ class UsersController extends Controller
             'password' => Hash::make($request->input('password'))
         ]);
 
-        // Create a wallet for new user and add bonus money for registering. Bonus money is added automatically from DB.
+        // Create a wallet for new user. User can later create more wallets.
         if ($user) {
             $user->wallets()->create([
                 'name' => __('My first Virtual Wallet'),
@@ -112,7 +112,7 @@ class UsersController extends Controller
 
         return redirect()
             ->route('wallet.list')
-            ->withSuccess(__('Thank you for registering! We have created your first virtuall wallet and added a bonus to your account.'));
+            ->withSuccess(__('Thank you for registering! We have created your first virtual wallet.'));
     }
 
     /**

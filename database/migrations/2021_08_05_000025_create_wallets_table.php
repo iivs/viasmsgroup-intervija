@@ -21,7 +21,7 @@ class CreateWalletsTable extends Migration
             // Randomly generated wallet unique ID.
             $table->string('uniqid');
             // Maybe some is a trillionare. Add 10€ as a bonus for registration.
-            $table->decimal('balance', 15, 2)->default(10);
+            $table->decimal('balance', 15, 2)->default(0);
             $table->timestamps();
             // Prevent user from deleting a wallet accidentally. There is a way to return it without losing all money.
             $table->softDeletes();

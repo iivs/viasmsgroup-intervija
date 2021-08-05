@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Wallet;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
@@ -98,16 +99,19 @@ class UsersController extends Controller
             'password' => Hash::make($request->input('password'))
         ]);
 
-        // Create a wallet for new user and add bonus money for registering.
+        // Create a wallet for new user and add bonus money for registering. Bonus money is added automatically from DB.
         if ($user) {
-            // TODO
+            $user->wallets()->create([
+                'name' => __('My first Virtual Wallet'),
+                'uniqid' => strtoupper(uniqid())
+            ]);
         }
 
-        // Log user in and send a warm welcome message.
-        // Auth::login($user);
-        
+        // Log user in, redirect to wallet list and send a warm welcome message.
+        Auth::login($user);
+
         return redirect()
-            ->route('login')
+            ->route('wallet.list')
             ->withSuccess(__('Thank you for registering! We have created your first virtuall wallet and added a bonus to your account.'));
     }
 

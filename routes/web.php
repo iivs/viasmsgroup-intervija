@@ -27,4 +27,5 @@ Route::post('/register', [UsersController::class, 'store'])->name('user.register
 Route::group(['middleware' => ['auth']], function() {
     Route::post('/logout', [UsersController::class, 'logout'])->name('logout');
     Route::get('/', [WalletsController::class, 'index'])->name('wallet.list');
+    Route::get('/wallet/{id}', [WalletsController::class, 'edit'])->name('wallet.edit');
 });

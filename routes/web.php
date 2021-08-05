@@ -15,17 +15,41 @@ use App\Http\Controllers\WalletsController;
 |
 */
 
-//Route::get('/')->middleware('auth');
-
-// Public routes.
+// Shows the user login form.
 Route::get('/login', [UsersController::class, 'index'])->name('login');
-Route::post('/login', [UsersController::class, 'login'])->name('user.login');
+
+// Shows the user registration form.
 Route::get('/register', [UsersController::class, 'register'])->name('register');
+
+// Performs the login action.
+Route::post('/login', [UsersController::class, 'login'])->name('user.login');
+
+// Performs the creation of new user.
 Route::post('/register', [UsersController::class, 'store'])->name('user.register');
 
-// Protected routes.
+// Protected routes are only accessible if user is logged in.
 Route::group(['middleware' => ['auth']], function() {
+    // Performs the log out of the current user.
     Route::post('/logout', [UsersController::class, 'logout'])->name('logout');
+
+    // Displays the wallet list.
     Route::get('/', [WalletsController::class, 'index'])->name('wallet.list');
+
+    // Shows the wallet edit form.
     Route::get('/wallet/{id}', [WalletsController::class, 'edit'])->name('wallet.edit');
+
+    // Shows a single wallet with transactions.
+    Route::get('/wallet/{id}/transactions', [WalletsController::class, 'show'])->name('wallet.show');
+
+    // Shows the wallet create form.
+    Route::get('/wallets/add', [WalletsController::class, 'add'])->name('wallet.add');
+
+    // Performs the creation of a new wallet.
+    Route::post('/wallets/add', [WalletsController::class, 'store'])->name('wallet.store');
+
+    // Performs update on a wallet.
+    Route::put('/wallet/{id}', [WalletsController::class, 'update'])->name('wallet.update');
+
+    // Performs the deletion of wallet.
+    Route::delete('/wallet/{id}', [WalletsController::class, 'destroy'])->name('wallet.delete');
 });

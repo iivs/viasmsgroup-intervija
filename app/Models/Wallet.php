@@ -12,6 +12,7 @@ class Wallet extends Model
     use SoftDeletes;
 
     protected $fillable = [
+        'user_id',
         'name',
         'uniqid'
     ];

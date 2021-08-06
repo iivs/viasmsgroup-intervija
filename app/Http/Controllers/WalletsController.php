@@ -109,6 +109,8 @@ class WalletsController extends Controller
         }
 
         if (Wallet::destroy($id)) {
+            // TODO - Set all this users wallets transactions as deleted.
+
             return redirect()
                 ->route('wallet.list')
                 ->withSuccess(__('Wallet successfully deleted.'));

@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\WalletsController;
+use App\Http\Controllers\TransactionsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,4 +53,12 @@ Route::group(['middleware' => ['auth']], function() {
 
     // Performs the deletion of wallet.
     Route::delete('/wallet/{id}', [WalletsController::class, 'destroy'])->name('wallet.delete');
+
+    // Show list of all transactions from all wallets.
+    Route::get('/transactions/{id?}', [TransactionsController::class, 'index'])->name('transactions.all');
+
+    // Show list of transactions from a single wallet.
+    Route::get('/transactions/{id}/{param?}', [TransactionsController::class, 'index'])->name('transactions.one');
+
+    // TODO - add, delete, mark as fraudulent
 });

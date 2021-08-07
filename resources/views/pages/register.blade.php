@@ -28,19 +28,19 @@
                         @csrf
 
                         <div class="mb-3 form-group required">
-                            <label for="name" class="form-label control-label">{{ __('Name') }}</label>
-                            <input class="form-control" id="name" name="name" value="{{ old('name') }}">
+                            <label for="name" class="form-label control-label">{{ __('Name') }}:</label>
+                            <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}">
                         </div>
                         <div class="mb-3 form-group required">
-                            <label for="email" class="form-label control-label">{{ __('E-mail') }}</label>
-                            <input class="form-control" id="email" name="email" value="{{ old('email') }}">
+                            <label for="email" class="form-label control-label">{{ __('E-mail') }}:</label>
+                            <input type="text" class="form-control" id="email" name="email" value="{{ old('email') }}">
                         </div>
                         <div class="mb-3 form-group required">
-                            <label for="password" class="form-label control-label">{{ __('Password') }}</label>
+                            <label for="password" class="form-label control-label">{{ __('Password') }}:</label>
                             <input type="password" class="form-control" id="password" name="password">
                         </div>
                         <div class="mb-3 form-group required">
-                            <label for="password_confirmation" class="form-label control-label">{{ __('Confirm password') }}</label>
+                            <label for="password_confirmation" class="form-label control-label">{{ __('Confirm password') }}:</label>
                             <input type="password" class="form-control" id="password_confirmation" name="password_confirmation">
                         </div>
 

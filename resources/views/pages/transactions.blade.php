@@ -20,9 +20,8 @@
         </div>
     @endif
 
-    @if (Session::has('info'))
-        <div class="alert alert-info" role="alert">{{ Session::get('info') }}</div>
-    @endif
+    <a class="btn btn-success mb-3" href="{{ route('transaction.add', ['id' => (Route::input('id') === null || Route::input('id') == 0) ? 0 : $wallets[0]->id ?? 0]) }}">+ {{ __('Add transaction') }}</a>
+    <br />
 
     <h3 class="float-start me-3">Select a wallet:</h3>
     <select class="float-start mt-1" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
@@ -55,7 +54,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($transactions as $transaction)
+                @foreach ($all_transactions as $transaction)
                     <tr>
                         <th scope="row">{{ $transaction['id'] }}</th>
                         <td style="width: 225px">{{ $transaction['from'] }}</td>
@@ -64,12 +63,12 @@
                         <td style="width: 150px">{{ $transaction['is_fraudulent'] }}</td>
                         <td style="width: 255px">{{ $transaction['created_at'] }}</td>
                         <td>
-                            <form action="{{ route('wallet.delete', $transaction['id']) }}" method="post">
+                            <form action="{{ route('transaction.update', $transaction['id']) }}" method="post">
                                 @csrf
                                 @method('PUT')
                                 <button type="submit" class="btn btn-link link-primary float-start" onclick="return confirm('{{ __('Change transaction status?') }}')">{{ __('Fraudulent') }}</button>
                             </form>
-                            <form action="{{ route('wallet.delete', $transaction['id']) }}" method="post">
+                            <form action="{{ route('transaction.delete', $transaction['id']) }}" method="post">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-link link-primary float-start" onclick="return confirm('{{ __('Are you sure you want to delete this transaction?') }}')">{{ __('Delete') }}</button>
@@ -80,14 +79,18 @@
             </tbody>
             <tfoot>
                 <td colspan="3" class="text-end">
-                    <span class="text-success">{{ __('Incoming') }}:</span><br />
-                    <span class="text-danger">{{ __('Outgoing') }}:</span><br />
-                    <spa class="{{ $totals['style'] }}"><strong>{{ __('Total') }}:</strong></span>
+                    @if (Route::input('param') === null)
+                        <span class="text-success">{{ __('Incoming') }}:</span><br />
+                        <span class="text-danger">{{ __('Outgoing') }}:</span><br />
+                    @endif
+                    <span class="{{ $totals['style'] }}"><strong>{{ __('Total') }}:</strong></span>
                 </td>
                 <td colspan="4">
-                <span class="text-success">{{ $totals['in'] }} €</span><br />
-                    <span class="text-danger">{{ $totals['out'] }} €</span><br />
-                    <spa class="{{ $totals['style'] }}"><strong>{{ $totals['total'] }} €</strong></span>
+                    @if (Route::input('param') === null) 
+                        <span class="text-success">{{ $totals['in'] }} €</span><br />
+                        <span class="text-danger">{{ $totals['out'] }} €</span><br />
+                    @endif
+                    <span class="{{ $totals['style'] }}"><strong>{{ $totals['total'] }} €</strong></span>
                 </td>
             </tfoot>
         </table>

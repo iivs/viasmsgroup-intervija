@@ -4,15 +4,18 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-//use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Transaction extends Model
 {
     use HasFactory;
-    //use SoftDeletes;
 
-    // public function wallet()
-    // {
-    //     return $this->belongsTo(Wallet::class);
-    // }
+    protected $fillable = [
+        'type',
+        'user_id',
+        'parent_id',
+        'from',
+        'to',
+        'amount',
+        'is_fraudulent'
+    ];
 }

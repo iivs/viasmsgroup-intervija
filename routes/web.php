@@ -60,5 +60,15 @@ Route::group(['middleware' => ['auth']], function() {
     // Show list of transactions from a single wallet.
     Route::get('/transactions/{id}/{param?}', [TransactionsController::class, 'index'])->name('transactions.one');
 
-    // TODO - add, delete, mark as fraudulent
+    // Show transaction create form.
+    Route::get('/transaction/{id?}', [TransactionsController::class, 'add'])->name('transaction.add');
+
+    // Perform the creation of transaction.
+    Route::post('/transaction', [TransactionsController::class, 'store'])->name('transaction.store');
+
+    // Performs the deletion of transaction.
+    Route::delete('/transaction/{id}', [TransactionsController::class, 'destroy'])->name('transaction.delete');
+
+    // Updates transaction status to fraudulent or back, if user changed his mind.
+    Route::put('/transaction/{id}', [TransactionsController::class, 'update'])->name('transaction.update');
 });

@@ -19,8 +19,8 @@
     <form action="{{ route('wallet.store') }}" method="post">
         @csrf
         <div class="mb-3 form-group required">
-            <label for="name" class="form-label control-label">{{ __('Name') }}</label>
-            <input class="form-control w-25" id="name" name="name" value="{{ old('name') }}" maxlength="255">
+            <label for="name" class="form-label control-label">{{ __('Name') }}:</label>
+            <input type="text" class="form-control w-25" id="name" name="name" value="{{ old('name') }}" maxlength="255">
         </div>
         <button type="submit" class="float-start me-3 btn btn-primary">{{ __('Save') }}</button>
     </form>

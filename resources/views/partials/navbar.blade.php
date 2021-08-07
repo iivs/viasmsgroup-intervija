@@ -10,7 +10,7 @@
                         <a class="nav-link @if (Route::is('wallet.list')) active @endif" href="{{ url('/') }}">{{ __('My Wallets') }}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link @if (Route::is('transactions.all') || Route::is('transactions.one')) active @endif" href="{{ url('/transactions') }}">{{ __('Transactions') }}</a>
+                        <a class="nav-link @if (Route::is('transactions.all') || Route::is('transactions.one') || Route::is('transaction.add')) active @endif" href="{{ url('/transactions') }}">{{ __('Transactions') }}</a>
                     </li>
                     <li class="nav-item">
                         <form method="POST" action="{{ route('logout') }}">

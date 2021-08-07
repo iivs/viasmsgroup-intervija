@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Wallet;
+use App\Models\Transaction;
 
 class WalletsController extends Controller
 {
@@ -109,7 +110,24 @@ class WalletsController extends Controller
         }
 
         if (Wallet::destroy($id)) {
-            // TODO - Set all this users wallets transactions as deleted.
+            // Find incoming and outgoing transactions of this wallet.
+            $transactions = Transaction::where(
+                function ($query) use ($wallet) {
+                    $query
+                        ->where('from', $wallet->uniqid)
+                        ->orWhere('to', $wallet->uniqid);
+                }
+            )
+            ->where(
+                function ($query) use ($userid) {
+                    $query->where('user_id', $userid);
+                }
+            )
+            ->get();
+
+            if ($transactions !== null) {
+                Transaction::destroy($transactions);
+            }
 
             return redirect()
                 ->route('wallet.list')

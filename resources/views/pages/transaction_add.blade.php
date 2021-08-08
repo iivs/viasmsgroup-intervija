@@ -128,8 +128,7 @@
                 // Show sender wallet form and hide credit card form.
                 $('#wallet_from_container').show();
                 $('#card_from_container').hide();
-            }
-            else {
+            } else {
                 // Show sender credit card form and hide wallet form.
                 $('#card_from_container').show();
                 $('#wallet_from_container').hide();
@@ -144,8 +143,7 @@
             if ($(this).val() == {{ \Config::get('transactions.type.wallet') }}) {
                 $('#wallet_to_container').show();
                 $('#card_to_container').hide();
-            }
-            else {
+            } else {
                 $('#card_to_container').show();
                 $('#wallet_to_container').hide();
             }

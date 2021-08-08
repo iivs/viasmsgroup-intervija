@@ -40,7 +40,6 @@ class TransactionsTableSeeder extends Seeder
                         'amount' => rand(10, 100000)
                     ];
                     break;
-
                 case \Config::get('transactions.type.wallet'):
                     // True if is an internal transaction from a wallet to wallet. False of from a wallet to card.
                     if ($faker->boolean(50)) {
@@ -60,8 +59,7 @@ class TransactionsTableSeeder extends Seeder
                             // Send random amount of money. Otherwise we would need to update the wallet balance.
                             'amount' => rand(10, 100000)
                         ];
-                    }
-                    else {
+                    } else {
                         // Change type to card for outgoing transaction.
                         $transaction['type'] = \Config::get('transactions.type.card');
                         // This is a transaction from a wallet to credit card.

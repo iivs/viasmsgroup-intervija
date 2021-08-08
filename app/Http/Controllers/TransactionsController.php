@@ -41,8 +41,7 @@ class TransactionsController extends Controller
 
         if ($id == 0) {
             $wallets = $wallets_all;
-        }
-        else {
+        } else {
             $wallets = Wallet::where(['id' => $id, 'user_id' => $userid])->get();
         }
 
@@ -63,11 +62,9 @@ class TransactionsController extends Controller
                         case 'out':
                             $query->where('from', $wallet->uniqid);
                             break;
-    
                         case 'in':
                             $query->where('to', $wallet->uniqid);
                             break;
-    
                         default:
                             $query
                                 ->where('from', $wallet->uniqid)
@@ -112,16 +109,14 @@ class TransactionsController extends Controller
                             $totals['in'] += $transaction['amount'];
                         }
                         
-                    }
-                    elseif (strpos($transaction['to'], '-') !== false) {
+                    } elseif (strpos($transaction['to'], '-') !== false) {
                         // User transfered money from wallet to another credit card. This is an outgoing transaction.
                         if (!array_key_exists($transaction['id'], $totals['processed'])) {
                             $totals['out'] -= $transaction['amount'];
                         }
                     }
-                }
-                // Transactions between wallets.
-                else {
+                } else {
+                    // Transactions between wallets.
                     foreach ($wallets as $wallet) {
                         if ($transaction['from'] === $wallet->uniqid) {
                             if (!array_key_exists($transaction['id'], $totals['processed'])) {
@@ -146,26 +141,22 @@ class TransactionsController extends Controller
                 $totals['total'] = $totals['in'];
                 $totals['style'] = 'text-success';
                 break;
-
             case 'out':
                 if ($totals['out'] == 0) {
                     $totals['style'] = 'text-success';
-                }
-                else {
+                } else {
                     $totals['style'] = 'text-danger';
                 }
 
                 $totals['total'] = $totals['out'];
                 break;
-
             default:
                 $totals['total'] = $totals['in'] + $totals['out'];
                 $totals['in'] = '+'.$totals['in'];
 
                 if ($totals['total'] > 0 || $totals['total'] == 0) {
                     $totals['style'] = 'text-success';
-                }
-                elseif ($totals['total'] < 0) {
+                } elseif ($totals['total'] < 0) {
                     $totals['style'] = 'text-danger';
                 }
         }
@@ -230,7 +221,6 @@ class TransactionsController extends Controller
                     'wallet_from' => 'required|integer'
                 ];
                 break;
-
             case \Config::get('transactions.type.card'):
                 $rules = [
                     'type_to' => 'required|integer|in:'.\Config::get('transactions.type.wallet'),
@@ -258,7 +248,6 @@ class TransactionsController extends Controller
                     'wallet_to' => 'required|string'
                 ];
                 break;
-
             case \Config::get('transactions.type.card'):
                 $rules += [
                     'holder_to' => 'required|string',
@@ -317,7 +306,7 @@ class TransactionsController extends Controller
                 }
 
                 // Check if valid decimal.
-                if (!preg_match('/^\d+(?:\.\d{2})?$/', $request->input('amount'), $match)){
+                if (!preg_match('/^\d+(?:\.\d{2})?$/', $request->input('amount'), $match)) {
                     return back()
                         ->withErrors(__('Invalid transaction amount.'))
                         ->withInput($request->all());
@@ -330,7 +319,6 @@ class TransactionsController extends Controller
                         ->withInput($request->all());
                 }
                 break;
-
             case \Config::get('transactions.type.card'):
                 // Validate credit card information.
                 if (!$this->validate_card_number($request->input('card_from'))) {
@@ -364,14 +352,15 @@ class TransactionsController extends Controller
                         ->withInput($request->all());
                 }
 
-                if ($request->input('type_from') == \Config::get('transactions.type.wallet')
-                        && $wallet_from->uniqid === $wallet_to->uniqid) {
+                if (
+                    $request->input('type_from') == \Config::get('transactions.type.wallet')
+                    && $wallet_from->uniqid === $wallet_to->uniqid
+                ) {
                     return back()
                         ->withErrors(__('Cannot make transaction to same wallet.'))
                         ->withInput($request->all());
                 }
                 break;
-
             case \Config::get('transactions.type.card'):
                 if (!$this->validate_card_number($request->input('card_to'))) {
                     return back()
@@ -417,7 +406,6 @@ class TransactionsController extends Controller
                         $wallet_to->balance += $data['amount'];
                         $wallet_to->update(['balance' => $wallet_to->balance]);
                         break;
-
                     case \Config::get('transactions.type.card'):
                         // From wallet to card.
                         $data['type'] = \Config::get('transactions.type.card');
@@ -436,7 +424,6 @@ class TransactionsController extends Controller
                         break;
                 }
                 break;
-
             case \Config::get('transactions.type.card'):
                 $data['type'] = \Config::get('transactions.type.card');
                 // From card to wallet. Destination should be wallet.
@@ -542,8 +529,7 @@ class TransactionsController extends Controller
     {
         if ($year > date('y')) {
             return true;
-        }
-        elseif ($year == date('y') && $month >= date('m')) {
+        } elseif ($year == date('y') && $month >= date('m')) {
             return true;
         }
 

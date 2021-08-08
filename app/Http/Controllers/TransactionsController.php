@@ -315,19 +315,19 @@ class TransactionsController extends Controller
                 // Check if given amount is allowed to transfer.
                 if ($request->input('amount') > $wallet_from->balance) {
                     return back()
-                        ->withErrors(__('Insuffcient funds.'))
+                        ->withErrors(__('Insufficient funds.'))
                         ->withInput($request->all());
                 }
                 break;
             case \Config::get('transactions.type.card'):
                 // Validate credit card information.
-                if (!$this->validate_card_number($request->input('card_from'))) {
+                if (!$this->validateCardNumber($request->input('card_from'))) {
                     return back()
                         ->withErrors(__('Invalid credit card number.'))
                         ->withInput($request->all());
                 }
 
-                if (!$this->validate_card_expiry_date($request->input('date_m'), $request->input('date_y'))) {
+                if (!$this->validateCardExpiryDate($request->input('date_m'), $request->input('date_y'))) {
                     return back()
                         ->withErrors(__('Invalid credit expiry date.'))
                         ->withInput($request->all());
@@ -362,7 +362,7 @@ class TransactionsController extends Controller
                 }
                 break;
             case \Config::get('transactions.type.card'):
-                if (!$this->validate_card_number($request->input('card_to'))) {
+                if (!$this->validateCardNumber($request->input('card_to'))) {
                     return back()
                         ->withErrors(__('Invalid credit card number.'))
                         ->withInput($request->all());
@@ -461,13 +461,11 @@ class TransactionsController extends Controller
         $transaction = Transaction::where(['id' => $id, 'user_id' => $userid])->first();
 
         if ($transaction === null) {
-            return back()
-                ->withErrors(__('The transaction does not exist.'));
+            return back()->withErrors(__('The transaction does not exist.'));
         }
 
         if (Transaction::where('id', $id)->delete()) {
-            return back()
-                ->withSuccess(__('Transaction successfully deleted.'));
+            return back()->withSuccess(__('Transaction successfully deleted.'));
         }
     }
 
@@ -485,8 +483,7 @@ class TransactionsController extends Controller
         $transaction = Transaction::where(['id' => $id, 'user_id' => $userid])->first();
 
         if ($transaction === null) {
-            return back()
-                ->withErrors(__('The transaction does not exist.'));
+            return back()->withErrors(__('The transaction does not exist.'));
         }
 
         // Toggle the status.
@@ -500,8 +497,7 @@ class TransactionsController extends Controller
         $transaction = Transaction::where('parent_id', $id)->first();
         $transaction->update(['is_fraudulent' => $is_fraudulent]);
 
-        return back()
-                ->withSuccess(__('Transaction status successfully updated.'));
+        return back()->withSuccess(__('Transaction status successfully updated.'));
     }
 
     /**
@@ -511,7 +507,7 @@ class TransactionsController extends Controller
      *
      * @return bool
      */
-    private function validate_card_number(string $number): bool
+    private function validateCardNumber(string $number): bool
     {
         return preg_match('/[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}/', $number);
     }
@@ -525,7 +521,7 @@ class TransactionsController extends Controller
      *
      * @return bool
      */
-    private function validate_card_expiry_date(int $month, int $year): bool
+    private function validateCardExpiryDate(int $month, int $year): bool
     {
         if ($year > date('y')) {
             return true;

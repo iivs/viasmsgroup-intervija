@@ -3,7 +3,8 @@ The purpose of this project is to demonstrate the knowledge of [Laravel](https:/
 
 #
 ## Task list
-Using the [Laravel](https://laravel.com/) PHP framework, create a basic "virtual wallet" application that satisfies the following user stories:
+Using the [Laravel](https://laravel.com/) PHP framework, create a basic "virtual wallet" application that satisfies the
+following user stories:
 - As a User, I can sign up for a User account, so that I can access the application.
 - As a User, I can log in to my account.
 - As a User, I can log out of my account.
@@ -25,7 +26,8 @@ Using the [Laravel](https://laravel.com/) PHP framework, create a basic "virtual
 
 #
 ## Usage
-You can use the DB seeder to generate fake data, but they will be inprecise. So for full experience. Let's do things manually.
+You can use the DB seeder to generate fake data, but they will be inprecise. So for full experience. Let's do things
+manually.
 
 ### Create user
 - Navigate to http://localhost:8000 home page and observe that you are required to log in to use the application;
@@ -38,7 +40,8 @@ You can use the DB seeder to generate fake data, but they will be inprecise. So 
 
 ### Log in
 - Navigate to http://localhost:8000 home page and observe that you are required to log in to use the application;
-- if you are already logged in and try to access the http://localhost:8000/login page, you will be redirected back to home page which is the virtual wallet list; 
+- if you are already logged in and try to access the http://localhost:8000/login page, you will be redirected back to
+home page which is the virtual wallet list; 
 
 ### Creating a virtual wallet
 - In the wallet list page, you will see the "+ Add wallet" button. Press button to navigate to wallet creation form;
@@ -61,14 +64,17 @@ You can use the DB seeder to generate fake data, but they will be inprecise. So 
 
 ### Deleting virtual wallets
 - You can delete the wallet name by pressing "Delete" from the single wallet view or from the list view;
-- The virtual wallet is soft-deleted in case you made a huge mistake. However undeleting feature is not implemented for users, though. And since there are no admin users who could do it, you can manipulate the `deleted_at` in DB by reseting it. However all transactions associated with it will be deleted permanently.
+- The virtual wallet is soft-deleted in case you made a huge mistake. However undeleting feature is not implemented for
+users, though. And since there are no admin users who could do it, you can manipulate the `deleted_at` in DB by reseting
+it. However all transactions associated with it will be deleted permanently.
 
 ### Creating transactions
 - Since by default you have 0.00€ on your virtual wallet, it's time to add some money to it;
 - in the top navigation bar press "Transactions";
 - in transaction list view press "+ Add transaction";
 - observe the two columns "From" and "To";
-- you can transfer money from your virtual wallets to any other virtuall wallets. Even your own. Except if the wallet is the same;
+- you can transfer money from your virtual wallets to any other virtuall wallets. Even your own. Except if the wallet is
+the same;
 - or you can transfer money from a credit card to your or any other virtual wallets;
 - you can also transfer money from wallet to another credit card;
 - but you cannot transfer money from credit card to another credit card;
@@ -81,54 +87,73 @@ You can use the DB seeder to generate fake data, but they will be inprecise. So 
 - type the virtual wallet address (copy it from you list of wallets);
 - if you wish to transfer money to another user wallet, you can do that too;
 - virtual wallet address has to exist in the system;
-- if everything was successful, you will be navigated back to you transaction list and you will see a table with transactions;
+- if everything was successful, you will be navigated back to you transaction list and you will see a table with
+transactions;
 - now you have money in virtual wallet, you can now transfer money to another wallet or a credit card;
 - to do so press "+ Add transaction" again;
 - on the left side choose "From: Wallet" and select a wallet;
 - you will see the wallet address and balance on the right side;
 - on the right side you can choose to transfer money to another wallet or a credit card;
 - if you choose a wallet, make sure the address exists. It can be your own, but not the same one;
-- if you choose a credit card, type a fake the card holder name and a fake card number. Make sure you follow the card syntax 4x4 digit number;
+- if you choose a credit card, type a fake the card holder name and a fake card number. Make sure you follow the card
+syntax 4x4 digit number;
 - if you wish to cancel a transaction press "Cancel" and you will be navigated back to transaction list view.
 
 ### Browsing transactions
 - Navigate to "Transactions" in the top navigation bar;
 - once you have made enough transactions, you can see some data in the transaction table;
 - by default you will see all incoming and outgoing transactions from all wallets;
-- you can narrow down the results by selecting a specific wallet or displaying only incoming or only outgoing transactions;
+- you can narrow down the results by selecting a specific wallet or displaying only incoming or only outgoing
+transactions;
 - at the end of the table you will see the totals of your transactions;
 - transactions made from and to credit cards are masked with asterisks. Only the last 4 digits are visible.
 
 ### Marking transactions as fraudulent
 - Navigate to "Transactions" in the top navigation bar;
-- if you have an suspicious incoming or outgoing transaction, you can mark it was fraudulent by pressing "Fraudulent" button in the transaction list view;
-- if this transaction was from another virtual wallet, this action will be visible visible to sender as well. The sender will too see that his transaction was marked as fraudulent;
+- if you have an suspicious incoming or outgoing transaction, you can mark it was fraudulent by pressing "Fraudulent"
+button in the transaction list view;
+- if this transaction was from another virtual wallet, this action will be visible visible to sender as well. The sender
+will too see that his transaction was marked as fraudulent;
 - if you change your mind, you can undo this by pressing the button again.
 
 ### Deleting transactions
 - Navigate to "Transactions" in the top navigation bar;
 - to delete a transaction press "Delete" in the list view;
 - the transaction will be deleted but only for you;
-- if this transaction was from a wallet to another wallet, the receiver will still see this transaction until he/she deletes this transaction from his/her list.
+- if this transaction was from a wallet to another wallet, the receiver will still see this transaction until he/she
+deletes this transaction from his/her list.
 
 #
 ## Missing features, future improvements, known issues etc.
-- Transactions should not be deletable, they should be archived. Deleting transactions simply messes up the whole balance and total count;
-- MethodNotAllowedHttpException is not handled well. Probably because the project is in development mode. For example using GET request to http://localhost:8000/logout that allows only POST should show a 404 error page or maybe redirect to home page if possible.
-- users cannot edit profiles, change e-mails and delete profiles or even change password. For the purposes of this task, decided to create only registration and authentication using custom controller. Otherwise I would've used [Laravel Breeze](https://github.com/laravel/breeze), but I didn't want to componentize every view, layout and button etc. I could use partitially components and partitially just blades, but that would've been incosistent.
-- add a fancy landing page, show e-mail and password logins on top corner, use maybe even log in via ajax. Many things to improve here;
+- Transactions should not be deletable, they should be archived. Deleting transactions simply messes up the whole
+balance and total count;
+- MethodNotAllowedHttpException is not handled well. Probably because the project is in development mode. For example
+using GET request to http://localhost:8000/logout that allows only POST should show a 404 error page or maybe redirect
+to home page if possible.
+- users cannot edit profiles, change e-mails and delete profiles or even change password. For the purposes of this task,
+decided to create only registration and authentication using custom controller. Otherwise I would've used
+[Laravel Breeze](https://github.com/laravel/breeze), but I didn't want to componentize every view, layout and button
+etc. I could use partitially components and partitially just blades, but that would've been incosistent.
+- add a fancy landing page, show e-mail and password logins on top corner, use maybe even log in via ajax. Many things
+to improve here;
 - would be be nice to add a "remember me". Currently there is no cookie stored;
 - would be nice to see all history from certain periods. Like a table or graph view;
 - Istead of making transactions instant, they should be confirmed first;
 - add a lot more JS to edit wallets and make transactions smooth and seamless;
-- allow user to sort wallets A-Z or Z-A. Add a filter for dates and other fields. For example view transactions of the past month;
+- allow user to sort wallets A-Z or Z-A. Add a filter for dates and other fields. For example view transactions of the
+past month;
 - add checkboxes in list view to delete multiple transactions or wallets;
 - get column length from DB and put it in the maxlength input field instead of hardcoding them with numbers 255;
 - instead of multiple forms, try to make one `<form>` and change the action depening on what button is pressed;
-- single Wallet view does not have transactions table binded. It could have an ajax call to transactions controller and return a json. Same call could be executed in transactions view as well;
-- after transaction is made, user is redirected back to the wallet selected before. Now it just redirects back to all wallet transactions
+- single Wallet view does not have transactions table binded. It could have an ajax call to transactions controller and
+return a JSON. Same call could be executed in transactions view as well;
+- after transaction is made, user is redirected back to the wallet selected before. Now it just redirects back to all
+wallet transactions
 - would be nice to have an option to choose destination one of user's wallets, instead of typing an address manually;
 - `<select>` buttons don't have a style for now. Actually all design could be improved;
-- add DB transactions if something goes wrong like deleting a wallet and transactions are stuck, the procedure could be rolled back;
-- transaction table seeder doesn't create two records in DB one for each user if transactions are from wallet to wallet. Resulting in inprecise data;
-- no feature or unit tests for now.
+- add DB transactions if something goes wrong like deleting a wallet and transactions are stuck, the procedure could be
+rolled back;
+- transaction table seeder doesn't create two records in DB one for each user if transactions are from wallet to wallet.
+Resulting in inprecise data;
+- feature tests are iffy and they cannot access certain error responses. Tests are incomplete and are probably written
+incorrectl,y and a lot are missing.
